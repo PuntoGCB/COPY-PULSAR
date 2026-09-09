@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Copy Engine by Pulsar — Generador de Contenido para Redes Sociales con IA</title>
+<meta name="description" content="Transformá comunicados de prensa y URLs en copies optimizados para Instagram, Facebook y YouTube en segundos. Herramienta gratuita de IA para creadores de contenido y community managers.">
+<meta name="keywords" content="generador de copies, contenido para redes sociales, IA para marketing, community manager, copy para instagram, copy para facebook, copy para youtube, herramienta de contenido, boletín informativo, Pulsar, pulsaria">
+<meta name="author" content="Pulsar — Agencia de Soluciones IA">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://copy.pulsaria.io/">
+<link rel="alternate" hreflang="es" href="https://copy.pulsaria.io/">
+<link rel="alternate" hreflang="x-default" href="https://copy.pulsaria.io/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://copy.pulsaria.io/">
+<meta property="og:title" content="Copy Engine by Pulsar — Generá copies para redes con IA">
+<meta property="og:description" content="Pegá un comunicado o URLs y obtené copies listos para Instagram, Facebook, YouTube y boletines informativos. Gratis.">
+<meta property="og:site_name" content="Pulsar Copy Engine">
+<meta property="og:locale" content="es_AR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Copy Engine by Pulsar — Copies para redes en segundos">
+<meta name="twitter:description" content="Herramienta de IA que transforma noticias y comunicados en copies optimizados para cada red social.">
+
+<!-- Schema.org: WebApplication -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Copy Engine by Pulsar",
+  "url":"https://copy.pulsaria.io",
+  "description":"Herramienta de inteligencia artificial que transforma comunicados de prensa y URLs en copies optimizados para Instagram, Facebook, YouTube y boletines informativos.",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "creator":{
+    "@type":"Organization",
+    "name":"Pulsar — Agencia de Soluciones IA",
+    "url":"https://pulsaria.io"
+  },
+  "featureList":["Generación de copies para Instagram","Generación de copies para Facebook","Generación de descripciones para YouTube","Generación de boletines informativos","Análisis automático de las 5W periodísticas"]
+}
+</script>
+
+<!-- Schema.org: FAQPage (AEO) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"¿Cómo generar copies para redes sociales con inteligencia artificial?","acceptedAnswer":{"@type":"Answer","text":"Copy Engine de Pulsar analiza automáticamente comunicados de prensa usando las 5W del periodismo y genera copies optimizados para Instagram, Facebook y YouTube en segundos."}},
+    {"@type":"Question","name":"¿Qué es Copy Engine de Pulsar?","acceptedAnswer":{"@type":"Answer","text":"Es una herramienta web gratuita que usa IA generativa para transformar textos periodísticos y URLs en contenido listo para publicar en redes sociales y boletines informativos."}},
+    {"@type":"Question","name":"¿Cómo crear un boletín informativo rápido a partir de URLs?","acceptedAnswer":{"@type":"Answer","text":"Agregá una o más URLs en el módulo de boletines de Copy Engine. La IA sintetiza la información en un titular atractivo y dos bajadas informativas de máximo 40 palabras en total."}}
+  ]
+}
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:hsl(0 0% 98%);
+  --bg-card:hsl(0 0% 100%);
+  --bg-input:hsl(0 0% 96%);
+  --bg-hover:hsl(0 0% 94%);
+  --tx:hsl(0 0% 10%);
+  --tx2:hsl(0 0% 40%);
+  --tx3:hsl(0 0% 60%);
+  --bd:hsl(0 0% 88%);
+  --bd2:hsl(0 0% 80%);
+  --accent:hsl(220 80% 56%);
+  --accent-bg:hsl(220 80% 95%);
+  --accent-tx:hsl(220 80% 40%);
+  --success-bg:hsl(145 50% 92%);
+  --success-tx:hsl(145 50% 30%);
+  --warn-bg:hsl(40 90% 92%);
+  --warn-tx:hsl(30 80% 30%);
+  --danger-bg:hsl(0 70% 94%);
+  --danger-tx:hsl(0 60% 40%);
+  --ig:hsl(340 75% 50%);
+  --fb:hsl(220 70% 53%);
+  --yt:hsl(0 100% 50%);
+  --radius:10px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,sans-serif;
+  --mono:"SF Mono",SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace;
+}
+
+[data-theme="dark"]{
+  --bg:hsl(220 15% 10%);
+  --bg-card:hsl(220 15% 13%);
+  --bg-input:hsl(220 15% 16%);
+  --bg-hover:hsl(220 15% 18%);
+  --tx:hsl(220 10% 92%);
+  --tx2:hsl(220 10% 65%);
+  --tx3:hsl(220 10% 45%);
+  --bd:hsl(220 10% 22%);
+  --bd2:hsl(220 10% 30%);
+  --accent:hsl(220 80% 65%);
+  --accent-bg:hsl(220 50% 18%);
+  --accent-tx:hsl(220 80% 75%);
+  --success-bg:hsl(145 30% 16%);
+  --success-tx:hsl(145 50% 65%);
+  --warn-bg:hsl(40 40% 16%);
+  --warn-tx:hsl(40 70% 70%);
+  --danger-bg:hsl(0 40% 16%);
+  --danger-tx:hsl(0 60% 65%);
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);line-height:1.6;transition:background .3s,color .3s}
+
+/* ── Layout ── */
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+header{padding:16px 0;border-bottom:1px solid var(--bd);position:sticky;top:0;background:var(--bg);z-index:100;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.header-inner{display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:baseline;gap:8px;text-decoration:none;color:var(--tx)}
+.logo-mark{font-weight:700;font-size:18px;letter-spacing:-0.5px}
+.logo-sub{font-size:12px;color:var(--tx3);font-weight:400}
+.header-actions{display:flex;align-items:center;gap:10px}
+
+/* ── Theme toggle ── */
+.theme-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--bd);background:var(--bg-card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .2s;color:var(--tx2)}
+.theme-btn:hover{border-color:var(--bd2);background:var(--bg-hover)}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:48px 0 40px}
+.hero h1{font-size:clamp(22px,5vw,32px);font-weight:700;letter-spacing:-0.5px;line-height:1.3;margin-bottom:10px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{font-size:15px;color:var(--tx2);max-width:540px;margin:0 auto}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--bd);margin-bottom:24px}
+.tab-btn{padding:10px 20px;font-size:14px;font-weight:500;border:none;background:none;color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;font-family:var(--font)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-btn:hover:not(.active){color:var(--tx2)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ── Forms ── */
+label.field-label{display:block;font-size:13px;color:var(--tx2);margin-bottom:8px;font-weight:500}
+textarea,input[type="url"],input[type="text"]{width:100%;padding:12px 14px;border:1px solid var(--bd);border-radius:var(--radius);background:var(--bg-input);color:var(--tx);font-size:14px;font-family:var(--font);outline:none;transition:border .2s;resize:vertical}
+textarea:focus,input:focus{border-color:var(--accent)}
+textarea{min-height:160px;line-height:1.7}
+
+.field-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;flex-wrap:wrap;gap:8px}
+.word-count{font-size:12px;color:var(--tx3)}
+
+/* ── Buttons ── */
+.btn{padding:9px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .2s;font-family:var(--font);display:inline-flex;align-items:center;gap:6px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover:not(:disabled){filter:brightness(1.1)}
+.btn-secondary{background:var(--bg-card);border:1px solid var(--bd);color:var(--tx2)}
+.btn-secondary:hover:not(:disabled){background:var(--bg-hover);border-color:var(--bd2)}
+.btn-copy{padding:5px 10px;font-size:12px;border-radius:6px;border:1px solid var(--bd);background:var(--bg-card);color:var(--tx2);cursor:pointer;transition:all .2s;font-family:var(--font)}
+.btn-copy.copied{background:var(--success-bg);color:var(--success-tx);border-color:transparent}
+
+/* ── Cards ── */
+.results-grid{display:grid;gap:14px;margin-top:20px}
+.social-card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--radius);overflow:hidden;transition:border .2s}
+.social-card:hover{border-color:var(--bd2)}
+.card-header{padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--bd);background:var(--bg-input)}
+.card-platform{font-weight:600;font-size:13px}
+.card-body{padding:14px 16px}
+.card-body pre{white-space:pre-wrap;font-family:var(--font);font-size:13px;line-height:1.7;margin:0;color:var(--tx)}
+.card-footer{padding:8px 16px;border-top:1px solid var(--bd);display:flex;justify-content:flex-end}
+
+/* ── URL Tags ── */
+.url-row{display:flex;gap:8px;margin-bottom:8px}
+.url-row input{flex:1}
+.url-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.url-tag{display:flex;align-items:center;gap:6px;padding:4px 10px;background:var(--accent-bg);border-radius:6px;font-size:12px;color:var(--accent-tx);max-width:100%;word-break:break-all}
+.url-tag button{background:none;border:none;cursor:pointer;color:var(--accent-tx);font-size:14px;line-height:1;padding:0;font-weight:700}
+
+/* ── Newsletter card ── */
+.nl-card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--radius);overflow:hidden;margin-top:20px}
+.nl-header{padding:10px 16px;border-bottom:1px solid var(--bd);background:var(--bg-input);display:flex;justify-content:space-between;align-items:center}
+.nl-body{padding:16px}
+.nl-titular-label,.nl-bajada-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--tx3);margin-bottom:6px;font-weight:600}
+.nl-titular{font-size:17px;font-weight:600;line-height:1.4;margin-bottom:14px}
+.nl-bajada{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
+.nl-bajada-num{font-size:11px;font-weight:600;color:var(--accent-tx);background:var(--accent-bg);border-radius:4px;padding:2px 7px;margin-top:2px;white-space:nowrap}
+.nl-bajada p{font-size:14px;line-height:1.6;margin:0}
+.wc-badge{font-size:11px;padding:3px 8px;border-radius:4px;font-weight:600}
+.wc-ok{background:var(--success-bg);color:var(--success-tx)}
+.wc-over{background:var(--danger-bg);color:var(--danger-tx)}
+
+/* ── Skeleton ── */
+.skel{display:flex;flex-direction:column;gap:8px}
+.skel-line{height:12px;border-radius:4px;background:var(--bg-hover);animation:pulse 1.4s ease-in-out infinite}
+.skel-line:nth-child(2){animation-delay:.15s}
+.skel-line:nth-child(3){animation-delay:.3s}
+.skel-line:nth-child(4){animation-delay:.45s}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── Footer ── */
+footer{text-align:center;padding:40px 0 24px;border-top:1px solid var(--bd);margin-top:48px}
+footer p{font-size:12px;color:var(--tx3)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ── FAQ (SEO/AEO) ── */
+.faq{margin-top:48px;padding-top:32px;border-top:1px solid var(--bd)}
+.faq h2{font-size:18px;font-weight:700;margin-bottom:20px;text-align:center}
+.faq-item{margin-bottom:16px;padding:14px 16px;background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--radius)}
+.faq-item h3{font-size:14px;font-weight:600;margin-bottom:6px}
+.faq-item p{font-size:13px;color:var(--tx2);line-height:1.6}
+
+/* ── Config bar ── */
+.config-bar{margin-top:24px;padding:12px 14px;border-radius:var(--radius);background:var(--warn-bg);border:1px solid transparent;font-size:12px;color:var(--warn-tx);display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.config-bar code{font-family:var(--mono);font-size:11px;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:3px}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .hero{padding:32px 0 28px}
+  .hero h1{font-size:22px}
+  .tab-btn{padding:10px 14px;font-size:13px}
+  .url-row{flex-direction:column}
+  .url-row .btn{width:100%}
+}
+
+/* ── Skip link (a11y) ── */
+.skip-link{position:absolute;top:-100%;left:16px;background:var(--accent);color:#fff;padding:8px 16px;border-radius:var(--radius);z-index:9999;font-size:14px;text-decoration:none}
+.skip-link:focus{top:8px}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#app">Saltar al contenido principal</a>
+
+<header>
+<div class="wrap header-inner">
+  <a href="https://copy.pulsaria.io" class="logo" aria-label="Copy Engine by Pulsar — Inicio">
+    <span class="logo-mark">PULSAR</span>
+    <span class="logo-sub">Copy Engine</span>
+  </a>
+  <div class="header-actions">
+    <a href="https://pulsaria.io" target="_blank" rel="noopener" class="btn btn-secondary" style="font-size:12px;padding:6px 12px">pulsaria.io</a>
+    <button class="theme-btn" id="themeToggle" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar tema">☀️</button>
+  </div>
+</div>
+</header>
+
+<main class="wrap" id="app">
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">Convertí noticias en <em>copies listos</em> para publicar</h1>
+  <p>Pegá un comunicado o URLs y obtené contenido optimizado para Instagram, Facebook, YouTube y boletines informativos — generado con inteligencia artificial en segundos.</p>
+</section>
+
+<!-- TABS -->
+<nav class="tabs" role="tablist" aria-label="Módulos de la aplicación">
+  <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-social" id="tab-social" onclick="switchTab('social')">📝 Comunicados → Social</button>
+  <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-newsletter" id="tab-newsletter" onclick="switchTab('newsletter')">🔗 URLs → Boletín</button>
+</nav>
+
+<!-- ═══════ MODULE 1: SOCIAL ═══════ -->
+<section class="tab-panel active" id="panel-social" role="tabpanel" aria-labelledby="tab-social">
+  <label class="field-label" for="inputText">Pegá el comunicado, nota o noticia</label>
+  <textarea id="inputText" placeholder="Pegá aquí el texto del comunicado de prensa o la noticia que querés transformar en copies para redes sociales…" aria-describedby="socialWordCount"></textarea>
+  <div class="field-footer">
+    <span class="word-count" id="socialWordCount">0 palabras</span>
+    <button class="btn btn-primary" id="btnProcess" onclick="processSocial()" disabled>Procesar noticia →</button>
+  </div>
+  <div class="results-grid" id="socialResults" aria-live="polite"></div>
+</section>
+
+<!-- ═══════ MODULE 2: NEWSLETTER ═══════ -->
+<section class="tab-panel" id="panel-newsletter" role="tabpanel" aria-labelledby="tab-newsletter">
+  <label class="field-label" for="urlInput">Agregá las URLs a sintetizar</label>
+  <div class="url-row">
+    <input type="url" id="urlInput" placeholder="https://ejemplo.com/noticia" aria-label="Ingresar URL">
+    <button class="btn btn-secondary" onclick="addUrl()">+ Agregar</button>
+  </div>
+  <div class="url-tags" id="urlTags"></div>
+  <div class="field-footer" style="margin-top:12px">
+    <span class="word-count" id="urlCount">0 URLs agregadas</span>
+    <button class="btn btn-primary" id="btnNewsletter" onclick="generateNewsletter()" disabled>Generar boletín →</button>
+  </div>
+  <div id="nlResults" aria-live="polite"></div>
+</section>
+
+<!-- ═══════ FAQ — SEO / AEO ═══════ -->
+<section class="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title">Preguntas frecuentes</h2>
+  <article class="faq-item">
+    <h3>¿Cómo funciona el generador de copies para redes sociales?</h3>
+    <p>Copy Engine analiza automáticamente tu comunicado de prensa usando las 5W del periodismo (Qué, Quién, Cuándo, Dónde, Por qué) y genera copies optimizados para Instagram, Facebook y YouTube respetando las mejores prácticas de cada plataforma.</p>
+  </article>
+  <article class="faq-item">
+    <h3>¿Puedo generar boletines informativos desde enlaces?</h3>
+    <p>Sí. Agregá una o más URLs y la herramienta sintetiza la información clave en un titular atractivo y dos bajadas informativas de máximo 40 palabras en total, ideal para newsletters o briefings internos.</p>
+  </article>
+  <article class="faq-item">
+    <h3>¿Es gratis esta herramienta?</h3>
+    <p>Copy Engine es una herramienta gratuita creada por Pulsar, agencia de soluciones con inteligencia artificial para profesionales independientes y micro-pymes en Argentina, Colombia y México.</p>
+  </article>
+  <article class="faq-item">
+    <h3>¿Qué modelos de IA utiliza?</h3>
+    <p>La herramienta utiliza modelos de IA generativa de última generación (Gemini, Claude o GPT, según configuración) para producir contenido de alta calidad adaptado a cada red social.</p>
+  </article>
+</section>
+
+<!-- ═══════ CONFIG NOTICE ═══════ -->
+<div class="config-bar" id="configNotice">
+  ⚠️&nbsp;
+  <span>Modo demo activo — los resultados son ejemplos estáticos. Para conectar la IA, editá <code>API_KEY</code> y cambiá <code>USE_MOCK</code> a <code>false</code> en el archivo HTML.</span>
+</div>
+
+</main>
+
+<footer>
+  <p>Hecho con IA por <a href="https://pulsaria.io" target="_blank" rel="noopener">Pulsar — Agencia de Soluciones IA</a></p>
+  <p style="margin-top:4px">Argentina · Colombia · México</p>
+</footer>
+
+<script>
+// ══════════════════════════════════════
+// CONFIGURACIÓN
+// ══════════════════════════════════════
+// Con Business Web Hosting de Hostinger, este HTML vive dentro
+// de /public de tu app Node.js (ver artifact "server.js"), así
+// que el proxy responde en el mismo dominio — no hace falta URL
+// completa, solo la ruta relativa.
+const PROXY_URL = '/api/generate';
+const USE_MOCK = true;       // ← Cambiá a false cuando la app Node esté deployada en hPanel
+// ══════════════════════════════════════
+// NOTA DE SEGURIDAD: la API key de Gemini NUNCA va en este archivo.
+// Vive como variable de entorno (GEMINI_API_KEY) dentro del panel
+// Node.js de hPanel, para que no quede expuesta en el código fuente.
+
+// ── Theme ──
+const html = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+const saved = localStorage.getItem('theme');
+if (saved) { html.dataset.theme = saved; toggle.textContent = saved === 'dark' ? '🌙' : '☀️'; }
+else if (matchMedia('(prefers-color-scheme:dark)').matches) { html.dataset.theme = 'dark'; toggle.textContent = '🌙'; }
+toggle.onclick = () => {
+  const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+  html.dataset.theme = next;
+  localStorage.setItem('theme', next);
+  toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+};
+
+// ── Config notice ──
+if (!USE_MOCK) document.getElementById('configNotice').style.display = 'none';
+
+// ── Tabs ──
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('tab-' + id).setAttribute('aria-selected', 'true');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+
+// ── Word counter for textarea ──
+const inputText = document.getElementById('inputText');
+const btnProcess = document.getElementById('btnProcess');
+const socialWC = document.getElementById('socialWordCount');
+inputText.addEventListener('input', () => {
+  const w = inputText.value.trim().split(/\s+/).filter(Boolean).length;
+  socialWC.textContent = w + ' palabras';
+  btnProcess.disabled = w === 0;
+});
+
+// ── URL list ──
+let urls = [];
+const urlInput = document.getElementById('urlInput');
+const urlTags = document.getElementById('urlTags');
+const urlCount = document.getElementById('urlCount');
+const btnNl = document.getElementById('btnNewsletter');
+
+urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addUrl(); } });
+
+function addUrl() {
+  const u = urlInput.value.trim();
+  if (!u || urls.includes(u)) return;
+  urls.push(u);
+  urlInput.value = '';
+  renderUrlTags();
+}
+function removeUrl(i) { urls.splice(i, 1); renderUrlTags(); }
+function renderUrlTags() {
+  urlTags.innerHTML = urls.map((u, i) => {
+    const short = u.length > 45 ? u.slice(0, 45) + '…' : u;
+    return `<span class="url-tag">${short}<button onclick="removeUrl(${i})" aria-label="Quitar URL">×</button></span>`;
+  }).join('');
+  urlCount.textContent = urls.length + (urls.length === 1 ? ' URL agregada' : ' URLs agregadas');
+  btnNl.disabled = urls.length === 0;
+}
+
+// ══════════════════════════════════════
+// SYSTEM PROMPTS
+// ══════════════════════════════════════
+const PROMPT_SOCIAL = `Eres un experto en comunicación digital y marketing de contenidos para América Latina.
+Tu tarea es analizar comunicados de prensa o noticias y transformarlos en copies optimizados para redes sociales.
+
+PROCESO INTERNO (no mostrar al usuario):
+1. Extrae las 5W periodísticas: Qué, Quién, Cuándo, Dónde, Por qué.
+2. Con esas 5W, genera los 3 formatos solicitados.
+
+Responde SOLO con un JSON válido, sin texto adicional ni markdown:
+{"instagram":"...","facebook":"...","youtube":"..."}
+
+REGLAS:
+- INSTAGRAM: Visual, dinámico, párrafos de máximo 2 líneas. Emojis estratégicos. 5-7 hashtags relevantes al final.
+- FACEBOOK: Informativo, conversacional. 150-250 palabras. Pregunta al final para incentivar debate. Sin hashtags.
+- YOUTUBE: Título en mayúsculas en la primera línea. Las 5W resumidas en 3 oraciones. Índice con timestamps ficticios.`;
+
+const PROMPT_NL = `Eres un editor de noticias especializado en síntesis periodística para América Latina.
+
+RESTRICCIÓN CRÍTICA: Las dos bajadas combinadas NO pueden superar 40 palabras. Contá las palabras.
+
+Responde SOLO con JSON válido:
+{"titular":"...","bajada1":"...","bajada2":"..."}
+
+REGLAS:
+- TITULAR: Impactante, máximo 12 palabras, activo.
+- BAJADA 1 + BAJADA 2 combinadas: MÁXIMO 40 palabras. Priorizá datos duros.`;
+
+// ══════════════════════════════════════
+// MOCK DATA
+// ══════════════════════════════════════
+const MOCK_SOCIAL = {
+  instagram: "🔥 ATENCIÓN | Una noticia que cambia todo\n\nLo que parecía imposible acaba de volverse realidad. Los expertos confirman que esto transforma la industria.\n\n📍 El impacto ya se siente en toda la región\n📅 Los detalles, ahora mismo\n\nDeslizá para enterarte de todo 👇\n\n#Noticias #Actualidad #Argentina #Colombia #Mexico #Tendencias #Importante",
+  facebook: "Una noticia que merece toda tu atención llegó esta mañana y ya está generando debate en múltiples sectores.\n\nLos especialistas consultados coinciden en que el impacto será significativo en el corto plazo. Fuentes oficiales confirmaron los detalles a través de un comunicado que describe los pasos a seguir y los sectores involucrados.\n\nLo más llamativo es la velocidad con la que evolucionaron los hechos. En menos de 48 horas, la situación pasó de especulación a realidad concreta.\n\nLas consecuencias aún están por verse, pero los primeros análisis sugieren cambios permanentes en este ámbito.\n\n¿Creés que esta noticia va a impactar tu vida cotidiana? Contanos tu opinión 👇",
+  youtube: "LO QUE NADIE TE DIJO SOBRE ESTE TEMA | La noticia que sacude todo\n\nUn hecho sin precedentes acaba de confirmar lo que muchos sospechaban. Los responsables del sector lo admitieron públicamente esta semana. Las consecuencias ya empiezan a sentirse en toda la región.\n\n📋 EN ESTE VIDEO:\n00:00 — Introducción y contexto\n02:30 — Qué pasó exactamente\n05:45 — Quiénes están involucrados\n09:00 — Por qué esto importa ahora\n13:20 — Qué esperar en los próximos días\n17:00 — Conclusión y análisis final"
+};
+const MOCK_NL = {
+  titular: "Un cambio histórico sacude al sector: nada será como antes",
+  bajada1: "Fuentes oficiales confirmaron esta semana una decisión que afecta directamente a millones de personas en la región.",
+  bajada2: "Especialistas advierten que el impacto económico podría sentirse antes de fin de año."
+};
+
+// ══════════════════════════════════════
+// API CALL — vía Cloudflare Worker (proxy seguro)
+// ══════════════════════════════════════
+// El front-end nunca ve la API key. Solo le pasa el prompt al
+// Worker, y el Worker es quien habla con Gemini usando la key
+// guardada como secreto en Cloudflare.
+async function callAI(systemPrompt, userMessage) {
+  if (USE_MOCK) {
+    await new Promise(r => setTimeout(r, 1600));
+    return null;
+  }
+  const res = await fetch(PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ systemPrompt, userMessage })
+  });
+  if (!res.ok) {
+    const errBody = await res.json().catch(() => ({}));
+    throw new Error(errBody.error || 'Error al conectar con el proxy');
+  }
+  return res.json();
+}
+
+// ══════════════════════════════════════
+// RENDER HELPERS
+// ══════════════════════════════════════
+function skeletonHTML() {
+  return `<div class="skel"><div class="skel-line" style="width:100%"></div><div class="skel-line" style="width:80%"></div><div class="skel-line" style="width:90%"></div><div class="skel-line" style="width:60%"></div></div>`;
+}
+
+function socialCardHTML(platform, color, icon, content, loading) {
+  const id = 'copy-' + platform.toLowerCase().replace(/\s/g, '');
+  return `
+  <article class="social-card" aria-label="Copy para ${platform}">
+    <div class="card-header">
+      <span style="font-size:16px" aria-hidden="true">${icon}</span>
+      <span class="card-platform" style="color:${color}">${platform}</span>
+    </div>
+    <div class="card-body">
+      ${loading ? skeletonHTML() : `<pre>${escHTML(content)}</pre>`}
+    </div>
+    ${!loading && content ? `<div class="card-footer"><button class="btn-copy" onclick="copyText(this,'${id}')" aria-label="Copiar copy de ${platform}">Copiar</button><textarea id="${id}" style="position:absolute;left:-9999px">${escHTML(content)}</textarea></div>` : ''}
+  </article>`;
+}
+
+function escHTML(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function copyText(btn, id) {
+  const t = document.getElementById(id).value;
+  navigator.clipboard.writeText(t).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function wordCountBadge(b1, b2) {
+  const c = (b1 + ' ' + b2).trim().split(/\s+/).filter(Boolean).length;
+  const cls = c > 40 ? 'wc-over' : 'wc-ok';
+  return `<span class="wc-badge ${cls}">${c}/40 palabras</span>`;
+}
+
+// ══════════════════════════════════════
+// MODULE 1: PROCESS SOCIAL
+// ══════════════════════════════════════
+async function processSocial() {
+  const text = inputText.value.trim();
+  if (!text) return;
+  const out = document.getElementById('socialResults');
+  btnProcess.disabled = true;
+  btnProcess.textContent = 'Procesando…';
+
+  // Show skeletons
+  out.innerHTML =
+    socialCardHTML('Instagram', 'var(--ig)', '📸', '', true) +
+    socialCardHTML('Facebook', 'var(--fb)', '🔵', '', true) +
+    socialCardHTML('YouTube', 'var(--yt)', '▶️', '', true);
+
+  let result;
+  try {
+    result = await callAI(PROMPT_SOCIAL, text);
+    if (!result) result = MOCK_SOCIAL;
+  } catch (e) {
+    result = MOCK_SOCIAL;
+  }
+
+  out.innerHTML =
+    socialCardHTML('Instagram', 'var(--ig)', '📸', result.instagram, false) +
+    socialCardHTML('Facebook', 'var(--fb)', '🔵', result.facebook, false) +
+    socialCardHTML('YouTube', 'var(--yt)', '▶️', result.youtube, false);
+
+  btnProcess.disabled = false;
+  btnProcess.textContent = 'Procesar noticia →';
+}
+
+// ══════════════════════════════════════
+// MODULE 2: NEWSLETTER
+// ══════════════════════════════════════
+async function generateNewsletter() {
+  if (!urls.length) return;
+  const out = document.getElementById('nlResults');
+  btnNl.disabled = true;
+  btnNl.textContent = 'Generando…';
+
+  out.innerHTML = `<div class="nl-card"><div class="nl-header"><span style="font-weight:600;font-size:13px">📧 Boletín informativo</span></div><div class="nl-body">${skeletonHTML()}</div></div>`;
+
+  const msg = 'Analiza y sintetiza la información de estos enlaces:\n' + urls.join('\n');
+  let result;
+  try {
+    result = await callAI(PROMPT_NL, msg);
+    if (!result) result = MOCK_NL;
+  } catch (e) {
+    result = MOCK_NL;
+  }
+
+  const copyAll = `${result.titular}\n\n• ${result.bajada1}\n• ${result.bajada2}`;
+  out.innerHTML = `
+  <div class="nl-card" aria-label="Boletín generado">
+    <div class="nl-header">
+      <span style="font-weight:600;font-size:13px">📧 Boletín informativo</span>
+      ${wordCountBadge(result.bajada1, result.bajada2)}
+    </div>
+    <div class="nl-body">
+      <p class="nl-titular-label">Titular</p>
+      <p class="nl-titular">${escHTML(result.titular)}</p>
+      <p class="nl-bajada-label">Bajadas</p>
+      <div class="nl-bajada"><span class="nl-bajada-num">01</span><p>${escHTML(result.bajada1)}</p></div>
+      <div class="nl-bajada"><span class="nl-bajada-num">02</span><p>${escHTML(result.bajada2)}</p></div>
+      <div style="border-top:1px solid var(--bd);padding-top:10px;margin-top:12px;display:flex;justify-content:flex-end">
+        <button class="btn-copy" onclick="copyText(this,'nlCopyAll')" aria-label="Copiar boletín completo">Copiar todo</button>
+        <textarea id="nlCopyAll" style="position:absolute;left:-9999px">${escHTML(copyAll)}</textarea>
+      </div>
+    </div>
+  </div>`;
+
+  btnNl.disabled = false;
+  btnNl.textContent = 'Generar boletín →';
+}
+</script>
+</body>
+</html>
