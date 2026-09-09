@@ -28,9 +28,10 @@
 // 7. Reiniciar la app
 // 8. Entrá a https://copy.pulsaria.io
 // ═══════════════════════════════════════════════════════════
-const fetch = require('node-fetch');
+
 const express = require('express');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Hostinger inyecta el puerto real
