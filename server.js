@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: '200kb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const GEMINI_MODEL = 'gemini-3.1-pro';
+const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 
 const hits = new Map();
 const LIMIT_PER_MIN = 20;
