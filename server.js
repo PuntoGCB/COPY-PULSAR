@@ -1,76 +1,54 @@
-// ═══════════════════════════════════════════════════════════
-// server.js — App Node.js para Hostinger (Business Web Hosting)
-// Versión CommonJS (require) — formato que el detector
-// automático de frameworks de Hostinger reconoce como Express.
-// ═══════════════════════════════════════════════════════════
-// Esta única app hace dos cosas:
-//   1) Sirve el HTML de la landing (carpeta /public)
-//   2) Expone POST /api/generate como proxy seguro hacia Gemini
-//      (la API key vive acá, nunca en el navegador del usuario)
-//
-// ─── ESTRUCTURA DE CARPETAS QUE VAS A SUBIR ───
-// Comprimí estos 3 elementos JUNTOS (sin carpeta madre alrededor):
-//   server.js          ← este archivo, en la raíz del ZIP
-//   package.json        ← en la raíz del ZIP
-//   public/
-//     └── index.html    ← tu landing, dentro de la carpeta public
-//
-// ─── PASOS EN hPanel ───
-// 1. hPanel → Sitios web → Añadir sitio web → Despliegá app web
-// 2. Subí el ZIP con la estructura de arriba (sin carpeta madre)
-// 3. Elegí el subdominio: copy.pulsaria.io
-// 4. Archivo de inicio: server.js
-// 5. Una vez creada la app, buscá "Variables de entorno" dentro
-//    de su panel y agregá:
-//    Nombre: GEMINI_API_KEY
-//    Valor: tu-key-de-aistudio.google.com
-// 6. "Ejecutar NPM Install"
-// 7. Reiniciar la app
-// 8. Entrá a https://copy.pulsaria.io
-// ═══════════════════════════════════════════════════════════
-
-const express = require('express');
-const path = require('path');
-const fetch = require('node-fetch');
-
-const app = express();
-const PORT = process.env.PORT || 3000; // Hostinger inyecta el puerto real
-
-app.use(express.json({ limit: '200kb' }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-const GEMINI_MODEL = 'gemini-2.0-flash';
-
-// ── Rate limiting simple en memoria (por IP) ──
-// Para producción seria conviene Redis o KV, pero esto alcanza
-// para frenar abuso básico en un MVP de agencia.
-const hits = new Map();
-const LIMIT_PER_MIN = 20;
-
-function isRateLimited(ip) {
-  const now = Date.now();
-  const entry = hits.get(ip) || { count: 0, ts: now };
-  if (now - entry.ts > 60000) { entry.count = 0; entry.ts = now; }
-  entry.count++;
-  hits.set(ip, entry);
-  return entry.count > LIMIT_PER_MIN;
+// ── Extraer texto legible de un HTML crudo ──
+function extractTextFromHTML(html) {
+  return html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
-app.post('/api/generate', async (req, res) => {
+// ── Descargar y extraer contenido de una URL ──
+async function fetchUrlContent(url) {
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; PulsarCopyEngine/1.0)' },
+      timeout: 10000,
+    });
+    if (!res.ok) return `[No se pudo acceder a ${url} — status ${res.status}]`;
+    const html = await res.text();
+    const text = extractTextFromHTML(html);
+    return text.slice(0, 4000);
+  } catch (err) {
+    return `[Error al descargar ${url}: ${String(err.message || err)}]`;
+  }
+}
+
+// ── Endpoint dedicado: boletín desde URLs reales ──
+app.post('/api/newsletter', async (req, res) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   if (isRateLimited(ip)) {
     return res.status(429).json({ error: 'Demasiadas solicitudes, esperá un minuto' });
   }
 
-  const { systemPrompt, userMessage } = req.body || {};
-  if (!systemPrompt || !userMessage) {
-    return res.status(400).json({ error: 'Faltan systemPrompt o userMessage' });
+  const { urls, systemPrompt } = req.body || {};
+  if (!Array.isArray(urls) || urls.length === 0) {
+    return res.status(400).json({ error: 'Falta un array de URLs' });
   }
-  if (userMessage.length > 8000) {
-    return res.status(400).json({ error: 'Texto demasiado largo (máx 8000 caracteres)' });
+  if (urls.length > 5) {
+    return res.status(400).json({ error: 'Máximo 5 URLs por boletín' });
   }
 
   try {
+    const contents = await Promise.all(urls.map(fetchUrlContent));
+    const combined = urls
+      .map((u, i) => `FUENTE ${i + 1} (${u}):\n${contents[i]}`)
+      .join('\n\n---\n\n');
+
     const geminiRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
@@ -78,7 +56,7 @@ app.post('/api/generate', async (req, res) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           system_instruction: { parts: [{ text: systemPrompt }] },
-          contents: [{ parts: [{ text: userMessage }] }],
+          contents: [{ parts: [{ text: combined }] }],
         }),
       }
     );
@@ -103,7 +81,7 @@ app.post('/api/generate', async (req, res) => {
 
     res.json(parsed);
   } catch (err) {
-    res.status(500).json({ error: 'Error interno del servidor', detail: String(err) });
+    res.status(500).json({ error: 'Error interno del servidor', detail: String(err.message || err) });
   }
 });
 
